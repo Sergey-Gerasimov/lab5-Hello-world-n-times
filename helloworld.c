@@ -39,18 +39,18 @@ static void print_hello_world(unsigned long data)
 
 static void create_timer()
 {
-    if (active) {
-        del_timer(&exp_timer);
-        active = 0;
-    }
+	if (active) {
+		del_timer(&exp_timer);
+		active = 0;
+	}
 
-    if (write_count != 0) {
-        exp_timer.expires = jiffies + delay * HZ;
-        exp_timer.data = write_count;
-        exp_timer.function = print_hello_world;
-        active = 1;
-        add_timer(&exp_timer);
-    }
+	if (write_count != 0) {
+		exp_timer.expires = jiffies + delay * HZ;
+		exp_timer.data = write_count;
+		exp_timer.function = print_hello_world;
+		active = 1;
+		add_timer(&exp_timer);
+	}
 }
 
 static ssize_t write_count_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count)
