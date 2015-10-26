@@ -56,7 +56,7 @@ static void create_timer()
 static ssize_t write_count_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count)
 {
 	sscanf(buf, "%du", &write_count);
-    create_timer();
+    	create_timer();
 	return count;
 }
 
@@ -68,30 +68,28 @@ static int __init writer_init(void)
 {
 	int ret;
 
-    active = 0;
-    delay = 3;
-    init_timer_on_stack(&exp_timer);
+    	active = 0;
+    	delay = 3;
+    	init_timer_on_stack(&exp_timer);
 
 	kobj = kobject_create_and_add("writer", NULL);
 	if (!kobj) {
 		return - ENOMEM;
-    }
+    	}
 
-    ret = sysfs_create_file(kobj, &writer_attrb.attr);
+	ret = sysfs_create_file(kobj, &writer_attrb.attr);
  	if (ret) {
-        kobject_put(kobj);
-    	return ret;
-    }
-
+        	kobject_put(kobj);
+    		return ret;
+    	}
 	return 0;
 }
 
 static void __exit writer_exit(void)
 {
-    if (active) {
-        del_timer(&exp_timer);
-    }
-
+	if (active) {
+		del_timer(&exp_timer);
+	}
 	sysfs_remove_file(kobj, &writer_attrb.attr);
 	kobject_put(kobj);
 }
